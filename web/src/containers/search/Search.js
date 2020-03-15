@@ -26,15 +26,12 @@ class Search extends Component {
 
   async componentDidMount() {
     const response = await getUserInfo();
-
     if (response.status === 200) {
       const { data } = response;
-
       this.setState({ user: data });
+      this.getUrlPoint();
+      this.getUserPoint();
     }
-
-    this.getUrlPoint();
-    this.getUserPoint();
   }
 
   getUrlPoint() {
@@ -72,7 +69,6 @@ class Search extends Component {
       let restaurants = this.filterRestaurants(dataRes.data);
 
       restaurants = this.sortRestaurants(restaurants);
-      console.log(restaurants[0]);
       this.setState({ restaurants });
     }
   }
@@ -96,6 +92,15 @@ class Search extends Component {
     this.getRestaurants();
   };
 
+  centerMoved = (_, map) => {
+    const point = {
+      lat: map.center.lat(),
+      lng: map.center.lng()
+    };
+    this.setState({ point });
+    this.getRestaurants();
+  };
+
   render() {
     const { restaurants, initalPoint, user, point } = this.state;
     return (
@@ -110,6 +115,7 @@ class Search extends Component {
                   onMapClicked={this.onMapClicked}
                   center={point}
                   markers={restaurants}
+                  onDragend={this.centerMoved}
                 ></MapContainer>
               </Col>
               <Col lg="8">
@@ -122,7 +128,7 @@ class Search extends Component {
                 ) : (
                   <div className="text-center">
                     <p className="lead text-gray-900 mb-5">
-                      Encontrá tu restaurant mas cercano
+                      Hace click en el mapa y empieza la busqueda.
                     </p>
                   </div>
                 )}

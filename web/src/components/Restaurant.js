@@ -11,7 +11,7 @@ function Restaurant(props) {
     allCategories
   } = props.info;
   return (
-    <Col lg="3" className="px-1">
+    <Col lg="3" xs="4" className="px-1">
       <Card className="shadow-lg mb-2">
         <a
           href={`https://www.pedidosya.com.uy/restaurantes/montevideo/${link}`}
@@ -46,9 +46,9 @@ function Restaurant(props) {
                 Tiempo de Entrega: mins {deliveryTimeMaxMinutes}
               </div>
               <div className="text-xs">
-                {allCategories.length <= 38
+                {allCategories.length <= 30
                   ? allCategories
-                  : `${allCategories.replace(/,/g, " · ").substr(0, 35)}...`}
+                  : `${allCategories.replace(/,/g, " · ").substr(0, 30)}...`}
               </div>
             </Col>
           </Row>

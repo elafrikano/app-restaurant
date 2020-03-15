@@ -50,8 +50,8 @@ class Login extends Component {
     const { handleLogin, handleOpenLoading, handleCloseLoading } = this.props;
 
     this.setState({ disabled: true });
+    handleOpenLoading();
     try {
-      handleOpenLoading();
       const response = await axios({
         headers: {
           "Content-Type": "application/x-www-form-urlencoded"
@@ -65,16 +65,23 @@ class Login extends Component {
       });
       this.setState({ disabled: false });
       handleCloseLoading();
-
-      const { data } = response;
-      if (data.status === 200) {
-        setUserSession(data.response.access_token);
+      if (response.status === 200) {
+        const { data } = response;
+        setUserSession(data.access_token);
       }
 
       handleLogin();
     } catch (error) {
       const { handleErrorLogin } = this.props;
-      handleErrorLogin(error.response.data);
+      let response;
+      if (error.response) {
+        response = error.response;
+      } else if (error.request) {
+        response = error.request;
+      } else {
+        response = error.message;
+      }
+      handleErrorLogin(response);
       handleCloseLoading();
     }
   };

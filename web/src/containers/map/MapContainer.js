@@ -17,7 +17,13 @@ export class MapContainer extends Component {
   }
 
   render() {
-    const { initialCenter, onMapClicked, center, markers } = this.props;
+    const {
+      initialCenter,
+      onMapClicked,
+      center,
+      markers,
+      onDragend
+    } = this.props;
     return (
       <Map
         google={this.props.google}
@@ -26,6 +32,7 @@ export class MapContainer extends Component {
         initialCenter={initialCenter}
         center={center}
         onClick={onMapClicked}
+        onDragend={onDragend}
       >
         {markers.map((marker, index) => {
           const point = marker.coordinates.split(",");
