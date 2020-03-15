@@ -34,6 +34,7 @@ class Search extends Component {
     }
 
     this.getUrlPoint();
+    this.getUserPoint();
   }
 
   getUrlPoint() {
@@ -45,12 +46,27 @@ class Search extends Component {
     }
   }
 
+  getUserPoint() {
+    if ("geolocation" in navigator) {
+      navigator.geolocation.getCurrentPosition(position => {
+        const point = {
+          lat: position.coords.latitude,
+          lng: position.coords.longitude
+        };
+        this.setState({ point });
+      });
+    }
+  }
+
   async getRestaurants() {
     const { point, user } = this.state;
+    const { handleOpenLoading, handleCloseLoading } = this.props;
+    handleOpenLoading();
     const resRestaurants = await getRestaurtans({
       country: user.country.id || 1,
       ...point
     });
+    handleCloseLoading();
     if (resRestaurants.status === 200) {
       const { data: dataRes } = resRestaurants;
       let restaurants = this.filterRestaurants(dataRes.data);
@@ -97,11 +113,23 @@ class Search extends Component {
                 ></MapContainer>
               </Col>
               <Col lg="8">
-                <Row>
-                  {restaurants.map((restaurant, index) => (
-                    <Restaurant info={restaurant} key={index}></Restaurant>
-                  ))}
-                </Row>
+                {Array.isArray(restaurants) && restaurants.length ? (
+                  <Row>
+                    {restaurants.map((restaurant, index) => (
+                      <Restaurant info={restaurant} key={index}></Restaurant>
+                    ))}
+                  </Row>
+                ) : (
+                  <div class="text-center">
+                    <div class="error mx-auto" data-text="404">
+                      404
+                    </div>
+                    <p class="lead text-gray-800 mb-5">Page Not Found</p>
+                    <p class="text-gray-500 mb-0">
+                      It looks like you found a glitch in the matrix...
+                    </p>
+                  </div>
+                )}
               </Col>
             </Row>
           </Container>

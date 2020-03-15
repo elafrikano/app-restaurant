@@ -32,6 +32,7 @@ export class MapContainer extends Component {
           return (
             <Marker
               name={marker.name}
+              title={marker.name}
               key={index}
               position={{ lat: point[0], lng: point[1] }}
             />

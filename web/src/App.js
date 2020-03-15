@@ -3,6 +3,7 @@ import Login from "./containers/login/Login";
 import Search from "./containers/search/Search";
 import ErrorBoundary from "./containers/error/ErrorBoundary";
 import Modal from "./components/ModalAlert";
+import LoadingModal from "./components/LoadingModal";
 
 import { errors } from "./constants/messages";
 import { getUserSession, setUserSession } from "./models/userModel";
@@ -12,6 +13,7 @@ class App extends Component {
     super();
     this.state = {
       modal: { show: false, title: "", body: "" },
+      loadingModal: { show: false },
       tokenSession: getUserSession() || ""
     };
   }
@@ -44,17 +46,35 @@ class App extends Component {
     this.setState({ modal });
   };
 
+  handleOpenLoading = () => {
+    const loadingModal = { ...this.loadingModal };
+    loadingModal.show = true;
+    this.setState({ loadingModal });
+  };
+
+  handleCloseLoading = () => {
+    const loadingModal = { ...this.loadingModal };
+    loadingModal.show = false;
+    this.setState({ loadingModal });
+  };
+
   render() {
-    const { modal, tokenSession } = this.state;
+    const { modal, tokenSession, loadingModal } = this.state;
     return (
       <div className="App">
         <ErrorBoundary>
           {tokenSession ? (
-            <Search logout={this.handleLogout}></Search>
+            <Search
+              logout={this.handleLogout}
+              handleOpenLoading={this.handleOpenLoading}
+              handleCloseLoading={this.handleCloseLoading}
+            ></Search>
           ) : (
             <Login
               handleLogin={this.handleLogin}
               handleErrorLogin={this.handleErrorLogin}
+              handleOpenLoading={this.handleOpenLoading}
+              handleCloseLoading={this.handleCloseLoading}
             ></Login>
           )}
 
@@ -64,6 +84,11 @@ class App extends Component {
             body={modal.body}
             handleClose={this.handleClose}
           ></Modal>
+
+          <LoadingModal
+            show={loadingModal.show}
+            handleClose={this.handleCloseLoading}
+          ></LoadingModal>
         </ErrorBoundary>
       </div>
     );

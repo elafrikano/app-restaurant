@@ -47,10 +47,11 @@ class Login extends Component {
 
   handleSubmit = async () => {
     const { email, password } = this.state;
-    const { handleLogin } = this.props;
+    const { handleLogin, handleOpenLoading, handleCloseLoading } = this.props;
 
     this.setState({ disabled: true });
     try {
+      handleOpenLoading();
       const response = await axios({
         headers: {
           "Content-Type": "application/x-www-form-urlencoded"
@@ -63,6 +64,7 @@ class Login extends Component {
         })
       });
       this.setState({ disabled: false });
+      handleCloseLoading();
 
       const { data } = response;
       if (data.status === 200) {
@@ -73,6 +75,7 @@ class Login extends Component {
     } catch (error) {
       const { handleErrorLogin } = this.props;
       handleErrorLogin(error.response.data);
+      handleCloseLoading();
     }
   };
 

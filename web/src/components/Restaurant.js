@@ -15,7 +15,6 @@ function Restaurant(props) {
       <Card className="shadow-lg mb-2">
         <a
           href={`https://www.pedidosya.com.uy/restaurantes/montevideo/${link}`}
-          style={{ width: 50 }}
           target="_blank"
           rel={name}
           style={{ width: "100%" }}
