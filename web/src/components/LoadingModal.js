@@ -4,14 +4,11 @@ import { Modal, ProgressBar } from "react-bootstrap";
 
 function LoadingModal({ show, handleClose }) {
   return (
-    <Modal
-      size="sm"
-      show={show}
-      onHide={handleClose}
-      aria-labelledby="example-modal-sizes-title-sm"
-    >
+    <Modal show={show} onHide={handleClose}>
       <Modal.Header>
-        <Modal.Title>Aguarde por favor...</Modal.Title>
+        <Modal.Title className="text-center">
+          Aguardá un momento, por favor.
+        </Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <ProgressBar variant="danger" animated now={100} />

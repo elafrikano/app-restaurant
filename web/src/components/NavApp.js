@@ -10,19 +10,19 @@ function NavApp(props) {
 
       <ul className="navbar-nav ml-auto">
         <li className="nav-item mx-1">
-          <a
-            className="nav-link font-weight-bold"
-            href="#"
-            onClick={props.logout}
-          >
+          <a className="nav-link text-gray-900" href="/" onClick={props.logout}>
             Logout
           </a>
         </li>
         <div className="topbar-divider d-none d-sm-block"></div>
 
         <div className="nav-item dropdown no-arrow">
-          <a className="nav-link" href="#">
-            <span className="mr-2 d-none d-lg-inline text-gray-600 small">
+          <a
+            className="nav-link font-weight-bold"
+            href="/"
+            onClick={e => e.preventDefault()}
+          >
+            <span className="mr-2 d-none d-lg-inline text-gray-900 small">
               {name} {lastName}
             </span>
           </a>
