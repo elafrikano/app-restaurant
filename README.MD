@@ -22,3 +22,9 @@ Decidí usar un stack MERN para realizar la aplicación ya que integrar Mongo y 
 
 - Crear un archivo .env tomando como referencia el archivo example.env
 - Ejecutar `cd api && npm install && npm run dev`
+
+## Puntos no incluidos
+
+- Punto Opcional: Disponibilizar un endpoint que modifique el tiempo X (definido en la sección de
+  Búsqueda) ​de ​forma ​que ​sea ​una ​configuración ​dinámica.
+- Explicacion: Para el mismo mi idea era crear un documento en mongodb llamado configuración en donde se incluiria todo lo que tendria que ver con la configuracion dinamica de la app. Tendria que haber creado un endpoint para devolver la configuracion en incluirla en el modulo search de la web y hubiera creado otro para modificar o crear el mismo.
