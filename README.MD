@@ -12,6 +12,7 @@ Decidí usar un stack MERN para realizar la aplicación ya que integrar Mongo y 
 
 - Tener una versión de node superior a la 12.6.1
 - Tener mongodb instalada
+- Descargar o Clonar el proyecto
 - Abrir una consola y pararse sobre el directorio raíz de la app
 
 ### Web
@@ -20,7 +21,7 @@ Decidí usar un stack MERN para realizar la aplicación ya que integrar Mongo y 
 
 ### Api
 
-- Crear un archivo .env tomando como referencia el archivo example.env
+- Crear el archivo .env tomando como referencia el archivo example.env
 - Ejecutar `cd api && npm install && npm start`
 
 ## Puntos no incluidos
