@@ -31,7 +31,7 @@ class App extends Component {
 
   handleErrorLogin = error => {
     let modal = { ...this.state.modal };
-    if (error.status === 401) {
+    if (error.status === 401 || error.status === 422) {
       modal.show = true;
       modal.title = errors[401].title;
       modal.body = errors[401].body;

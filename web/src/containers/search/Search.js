@@ -103,13 +103,31 @@ class Search extends Component {
 
   render() {
     const { restaurants, initalPoint, user, point } = this.state;
+    const renderRestaurants =
+      Array.isArray(restaurants) && restaurants.length ? true : false;
     return (
       <div id="content-wrapper" className="d-flex flex-column">
         <div id="content">
           <NavApp user={user} logout={this.props.logout}></NavApp>
           <Container fluid>
             <Row>
-              <Col lg="4" style={{ height: 500 }}>
+              {!renderRestaurants && (
+                <Col lg="12" className="mb-2">
+                  <div className="text-center text-gray-900">
+                    <h6 className="m-0 font-weight-bold text-primary">
+                      Hace click o desplázate en el mapa para buscar.
+                    </h6>
+                  </div>
+                </Col>
+              )}
+              <Col
+                lg={
+                  !renderRestaurants
+                    ? { span: 8, offset: 2 }
+                    : { span: 4, offset: 0 }
+                }
+                style={{ height: 500 }}
+              >
                 <MapContainer
                   initialCenter={initalPoint}
                   onMapClicked={this.onMapClicked}
@@ -118,19 +136,15 @@ class Search extends Component {
                   onDragend={this.centerMoved}
                 ></MapContainer>
               </Col>
-              <Col lg="8">
-                {Array.isArray(restaurants) && restaurants.length ? (
+              <Col
+                lg={!renderRestaurants ? { span: 6, offset: 3 } : { span: 8 }}
+              >
+                {renderRestaurants && (
                   <Row>
                     {restaurants.map((restaurant, index) => (
                       <Restaurant info={restaurant} key={index}></Restaurant>
                     ))}
                   </Row>
-                ) : (
-                  <div className="text-center">
-                    <p className="lead text-gray-900 mb-5">
-                      Hace click en el mapa y empieza la busqueda.
-                    </p>
-                  </div>
                 )}
               </Col>
             </Row>

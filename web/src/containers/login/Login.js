@@ -10,8 +10,8 @@ class Login extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      email: "test_automation_000@pedidosya.com",
-      password: "abc1234",
+      email: "",
+      password: "",
       disabled: true,
       errors: {
         email: false,
@@ -24,7 +24,8 @@ class Login extends Component {
     const { email, password, errors } = this.state;
     let disabled = true;
     if (email !== prevState.email || password !== prevState.password) {
-      if (!errors.email && !errors.password) disabled = false;
+      if (email && !errors.email && password && !errors.password)
+        disabled = false;
       this.setState({ disabled });
     }
   }
