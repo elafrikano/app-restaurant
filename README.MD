@@ -6,7 +6,7 @@ Aplicación destinada a la búsqueda de restaurantes cercanos a partir de la ubi
 
 ## Justificación
 
-Decidí usar un stack MERN para realizar la aplicación ya que integrar Mongo y JavaScript es super sencillo con la ayuda de mongoose, Express me permitió crear una infraestructura sólida para la app, con el maneje todo el Backend con Node y por último React permitió desarrollar el Frontend de manera limpia, organizada.
+Decidí usar un stack MERN para realizar la aplicación ya que integrar Mongo y JavaScript es super sencillo con la ayuda de mongoose. Express me permitió crear una infraestructura sólida para la app, con él realicé todo el Backend con Node y por último React permitió desarrollar el Frontend de manera limpia y organizada.
 
 ## Pasos para ejecutar la app
 
