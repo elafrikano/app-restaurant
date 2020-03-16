@@ -40,7 +40,6 @@ class userController {
     const { authorization = "" } = req.headers;
     // Llamo a la funcion del modelo para obtener los datos
     const response = await userModel.getUser(authorization);
-    console.log();
     // Valido el status para dar respuesta a la peticion
     if (response.status) {
       const { code } = response.data;
