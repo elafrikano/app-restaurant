@@ -4,8 +4,8 @@ import qs from "qs";
 import { Container, Row, Col } from "react-bootstrap";
 
 import NavApp from "../../components/NavApp";
-import MapContainer from "../map/MapContainer";
 import Restaurant from "../../components/Restaurant";
+import MapContainer from "../map/MapContainer";
 
 import { getUserInfo } from "../../models/userModel";
 import { getRestaurtans } from "../../models/restaurantModel";
@@ -20,7 +20,8 @@ class Search extends Component {
         lat: -34.900335,
         lng: -56.1702457
       },
-      point: {}
+      point: {},
+      lastSearchs: {}
     };
   }
 
@@ -57,20 +58,40 @@ class Search extends Component {
 
   async getRestaurants() {
     const { point, user } = this.state;
+    const lastSearchs = { ...this.state.lastSearchs };
     const { handleOpenLoading, handleCloseLoading } = this.props;
+    let resultMemo = this.getLastSearch(point);
     handleOpenLoading();
-    const resRestaurants = await getRestaurtans({
-      country: user.country.id || 1,
-      ...point
-    });
-    handleCloseLoading();
-    if (resRestaurants.status === 200) {
-      const { data: dataRes } = resRestaurants;
-      let restaurants = this.filterRestaurants(dataRes.data);
+    if (!resultMemo) {
+      const resRestaurants = await getRestaurtans({
+        country: user.country.id || 1,
+        ...point
+      });
 
-      restaurants = this.sortRestaurants(restaurants);
+      if (resRestaurants.status === 200) {
+        const { data: dataRes } = resRestaurants;
+        let restaurants = this.filterRestaurants(dataRes.data);
+
+        restaurants = this.sortRestaurants(restaurants);
+        lastSearchs[`${point.lat}${point.lng}`] = {};
+        lastSearchs[`${point.lat}${point.lng}`].time = Date.now();
+        lastSearchs[`${point.lat}${point.lng}`].result = restaurants;
+        this.setState({ restaurants, lastSearchs });
+      }
+    } else {
+      let restaurants = lastSearchs[`${point.lat}${point.lng}`].result;
       this.setState({ restaurants });
     }
+    handleCloseLoading();
+  }
+
+  getLastSearch(point) {
+    const { lastSearchs } = this.state;
+    let ret = false;
+    if (lastSearchs[`${point.lat}${point.lng}`]) {
+      ret = Date.now() - lastSearchs[`${point.lat}${point.lng}`].time <= 60000;
+    }
+    return ret;
   }
 
   sortRestaurants(restaurants) {
