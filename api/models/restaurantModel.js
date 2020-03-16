@@ -20,10 +20,6 @@ class restaurantModel {
     };
     const response = await pedidosYa.searchRestaurants(data);
 
-    if (response.isAxiosError) {
-      console.log(response);
-    }
-
     return response;
   }
 }

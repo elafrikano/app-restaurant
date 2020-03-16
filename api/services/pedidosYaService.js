@@ -33,7 +33,7 @@ class pedidosYaService {
       const token = await this.getGuestToken();
       let response = await axios({
         method: this.method,
-        url: this.baseUrl + `tokens?userName=${username}&password=${password}`,
+        url: `${this.baseUrl}tokens?userName=${username}&password=${password}`,
         headers: {
           Authorization: token,
           "Content-Type": "application/json"
@@ -42,9 +42,6 @@ class pedidosYaService {
       if (response.status === 200) return response.data;
     } catch (error) {
       if (error.response) {
-        // error.response.data
-        // error.response.status
-        // error.response.headers
         return error.response;
       } else if (error.request) {
         return error.request;
@@ -65,7 +62,13 @@ class pedidosYaService {
       });
       if (response.status === 200) return response.data;
     } catch (error) {
-      return error.response;
+      if (error.response) {
+        return error.response;
+      } else if (error.request) {
+        return error.request;
+      } else {
+        return error.message;
+      }
     }
   }
 
@@ -90,7 +93,13 @@ class pedidosYaService {
       });
       if (response.status === 200) return response.data;
     } catch (error) {
-      return error;
+      if (error.response) {
+        return error.response;
+      } else if (error.request) {
+        return error.request;
+      } else {
+        return error.message;
+      }
     }
   }
 }
