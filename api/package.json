@@ -4,6 +4,7 @@
   "description": "Aplicación destinada a la búsqueda de restaurantes cercanos a partir de la ubicación del usuario.",
   "main": "index.js",
   "scripts": {
+    "start": "node index.js",
     "dev": "nodemon index.js",
     "test": "mocha 'test/**/*.js'"
   },

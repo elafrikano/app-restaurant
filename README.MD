@@ -21,7 +21,7 @@ Decidí usar un stack MERN para realizar la aplicación ya que integrar Mongo y 
 ### Api
 
 - Crear un archivo .env tomando como referencia el archivo example.env
-- Ejecutar `cd api && npm install && npm run dev`
+- Ejecutar `cd api && npm install && npm start`
 
 ## Puntos no incluidos
 
